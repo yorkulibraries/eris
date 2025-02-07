@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  service: 
+  feed: 
+  position: 1
+
+two:
+  service: 
+  feed: 
+  position: 1

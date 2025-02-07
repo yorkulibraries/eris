@@ -1,0 +1,57 @@
+<%= simple_form_for @service, :html => { :class => 'form-vertical' } do |f| %>
+  <fieldset>
+	
+	<div class="row">
+		<div class="span6">
+			<%= f.input :name, :input_html => {:class => "span4" } %>
+
+			<%= f.input :service_slug, :input_html => {:class => "span3" } %>
+			
+			<%= f.input :show_max_entries, :collection => [1,2,3,4,5,6,7,8,9,10], :label => "Max Entries to Show", :hint => "On per feed basis" %>
+			
+			<hr/>
+			<%= f.input :live, :wrapper => :checkbox %>
+			
+			<hr/>
+			<h3>Transform Course Codes Into a Tag</h3>
+			<br/>
+			<%= f.input :transform_course_code, :wrapper => :checkbox  %>
+			<p class="trivial">Eris will look for courses parameter with the list of comma separated courses ids and transform them into simplified version.</p>
+			<p class="trivial">I.e. 2011_SC_NATS_Y_1670__6_A course id will be broken down to NATS_1670 and SC/NATS and passed on as a tag attribute to the feeds</p>
+								
+			
+		</div>
+		<div class="span6">
+			<div class="control-group">
+				<h3>Data Feeds</h3>
+					<br/>
+				<%= f.collection_check_boxes :feed_ids, Feed.all, :id, :name do |builder| 
+					  builder.check_box + " " + builder.text + " <br/>".html_safe					
+				 end %>
+			</div>
+			<hr/>
+			<%= f.input :css_style, :as => :text, :input_html => {:class => "span5" }, :label => "Optional CSS"  %>
+			
+		</div>
+	</div>
+	
+	
+	
+	
+    <div class="form-actions">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to 'Cancel', services_path, :class => 'btn' %>
+
+	  <div class="float-right">
+	  	<%= link_to 'Delete', service_path(@service), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger float-right' unless @service.new_record?%>
+	  </div>
+    </div>
+  </fieldset>
+
+	<% unless @service.new_record? %>
+	<div class="float-right">
+		<p><span class="label label-warning">Warning:</span> You can only delete a service that is not live. This action can be reversed.</p>
+	</div>
+	<% end %>
+
+<% end %>

@@ -1,0 +1,89 @@
+<% title "Service - #{@service.name}" %>
+
+<% title_html do %>
+	<h1><%= @service.name %> <small>  <%= @service.live? ? "Live" : "Disabled" %> </small></h1>
+<% end %>
+
+<div class="row">
+	<div class="span6">
+		<h3>Service Slug</h3>
+		<p><%= @service.service_slug %></p>
+		<h3>Maximum No. of Entries</h3>
+		<p><%= @service.show_max_entries %> per feed</p>
+		<h3>Transform Course Code</h3>
+		<p><%= @service.transform_course_code? ? "Yes" : "No" %></p>
+		<p class="trivial">Eris will look for courses parameter with the list of comma separated courses ids and transform them into simplified version.</p>
+		<p class="trivial">I.e. 2011_SC_NATS_Y_1670__6_A course id will be broken down to NATS_1670 and SC/NATS and passed on as a tag attribute to the feeds</p>
+
+		<hr/>
+
+	</div>
+	<div class="span6">
+		<h3>Assigned Data Feeds <small class="trivial">order for display</small></h3>
+		<br/>
+		<ul id="feeds"  data-update-url="<%= sort_feeds_service_url %>">
+			<% @service.feeds.each do |feed| %>
+				<%= content_tag_for :li, feed do %>
+					<p><span class="handle">&equiv;</span>
+					&nbsp;&nbsp;<strong><%= feed.name %></strong> <small class="trivial"><%= feed.show_title? ? "shown" : "not shown" %></small><br/>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="trivial"><%= feed.url.blank? ? "HTML Block" : feed.url  %></span></p>
+				<% end %>
+			<% end %>
+		</ul>
+		<hr/>
+		<div class="css">
+			<strong>CSS</strong><br/>
+			<pre class="prettyprint linenums"><%= @service.css_style %></pre>
+		</div>
+	</div>
+
+</div>
+
+
+
+
+
+<div class="form-actions">
+
+
+  	<%= link_to 'Edit Service', edit_service_path(@service), :class => 'btn btn-success' %>
+	<%= link_to 'Back', services_path, :class => 'btn'  %>
+
+	<div class="float-right">
+		<%= link_to 'Preview', preview_service_path(@service), :class => 'btn btn-info'  %>
+		<a href="#" class='btn btn-inverse'  onclick="$('#get_service_code').show();">Get The Code</a>
+	</div>
+</div>
+
+<div id="get_service_code" class="hide">
+	<a class="close" onclick="$('#get_service_code').hide();">&times;</a>
+	<h4>Get The Code</h4>
+
+	<pre>
+	<%= <<-"CODE"
+
+<script type="text/javascript" src="#{request.protocol}#{request.host_with_port}#{asset_path('jquery.js')}"></script>
+<script type="text/javascript" src="#{root_url}fetch/#{@service.service_slug}.js?courses=LIST_COURSES_HERE"></script>
+
+
+
+
+<!-- OPTIONAL DEFAULT CONTENT -->
+<div id="eris_default_content">
+	<div id="eris_loading_message">Loading...</div>
+	<div id="eris_content_message" style="display: none;">
+		<a href="https://www.library.yorku.ca">York University Libraries</a>
+	</div>
+</div>
+<script type="text/javascript">
+	setTimeout("document.getElementById('eris_loading_message').style.display='none'; document.getElementById('eris_content_message').style.display = 'block';",15000);
+</script>
+
+<!-- END OPTIONAL DEFAULT CONTENT -->
+
+CODE
+	%>
+
+	</pre>
+
+</div>

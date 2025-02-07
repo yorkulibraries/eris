@@ -1,0 +1,22 @@
+<% title "Data Feed Details" %>
+
+<p>
+  <b>Name</b><br>
+  <%= @feed.name %>
+</p>
+
+<div class="html">
+	<strong>HTML Block</strong><br/>
+	<pre class="prettyprint linenums"><%= @feed.description %></pre>
+</div>
+
+<p>
+  <b>RSS Feed Url</b><br>
+  <%= @feed.url %>
+</p>
+
+<div class="form-actions">
+  <%= link_to 'Back', feeds_path, :class => 'btn'  %>
+  <%= link_to 'Edit', edit_feed_path(@feed), :class => 'btn' %>
+  <%= link_to 'Delete', feed_path(@feed), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
+</div>

@@ -1,0 +1,21 @@
+<% title "#{@service.name} service" %>
+
+<form action="<%= fetch_path(@service.service_slug) %>.html" method="get">
+	<input name="courses" value=""/>
+	<input type="submit" value="Go">
+</form>
+
+<% courses = params[:courses] ? params[:courses] : "2011_AP_SOSC_Y_4511_HJ" %>
+
+<div class="push-down">
+	<div id="eris_default_content">
+		<div id="eris_loading_message">Loading...</div>
+		<div id="eris_content_message" style="display: none;">
+			<a href="https://www.library.yorku.ca">York University Libraries</a>
+		</div>
+	</div>
+	<script type="text/javascript">
+		setTimeout("document.getElementById('eris_loading_message').style.display='none'; document.getElementById('eris_content_message').style.display = 'block';",15000);
+	</script>
+	<script type="text/javascript" src="<%= fetch_path(@service.service_slug) %>.js?courses=<%= courses %>&preview=true"></script>
+</div>

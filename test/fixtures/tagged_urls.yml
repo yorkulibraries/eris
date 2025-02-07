@@ -1,0 +1,13 @@
+one:
+  tag: MyString
+  url: MyString
+  title: MyString
+  desc: MyText
+  source: MyString
+
+two:
+  tag: MyString
+  url: MyString
+  title: MyString
+  desc: MyText
+  source: MyString

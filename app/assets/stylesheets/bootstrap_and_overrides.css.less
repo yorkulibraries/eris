@@ -1,0 +1,84 @@
+@import "twitter/bootstrap/bootstrap";
+
+body { padding-top: 60px; }
+
+@import "twitter/bootstrap/responsive";
+
+// Set the correct sprite paths
+@iconSpritePath: asset-path("twitter/bootstrap/glyphicons-halflings.png");
+@iconWhiteSpritePath: asset-path("twitter/bootstrap/glyphicons-halflings-white.png");
+
+/** disabling the default table row hover highlighting, it was annoying */
+.table tbody tr:hover td, .table tbody tr:hover th { background: none; }
+
+
+.float-left { float: left; }
+.float-right { float: right; }
+
+.trivial { color: #797D7F; }
+
+#get_service_code h4 {
+	margin-bottom: 10px;
+}
+
+ul#feeds { list-style: none; 
+	.handle { cursor: pointer; }
+	}
+
+
+.standalone {
+	.border-radius(5px);
+	.box-shadow(0 1px 5px rgba(0, 0, 0, 0.35));
+	padding: 5px 10px 10px; 
+	margin-bottom: 15px;
+}
+
+
+
+/** badges from the latest bootstrap, remove when it comes with the gem. */
+
+.badge {
+	background-color: #999999;
+    border-radius: 9px 9px 9px 9px;
+    color: #FFFFFF;
+    font-size: 12.025px;
+    font-weight: bold;
+    padding: 1px 9px 2px;
+    white-space: nowrap;
+}
+
+.badge:hover {
+    color: #FFFFFF;
+    cursor: pointer;
+    text-decoration: none;
+}
+.badge-error {
+    background-color: #B94A48;
+}
+.badge-error:hover {
+    background-color: #953B39;
+}
+.badge-warning {
+    background-color: #F89406;
+}
+.badge-warning:hover {
+    background-color: #C67605;
+}
+.badge-success {
+    background-color: #468847;
+}
+.badge-success:hover {
+    background-color: #356635;
+}
+.badge-info {
+    background-color: #3A87AD;
+}
+.badge-info:hover {
+    background-color: #2D6987;
+}
+.badge-inverse {
+    background-color: #333333;
+}
+.badge-inverse:hover {
+    background-color: #1A1A1A;
+}

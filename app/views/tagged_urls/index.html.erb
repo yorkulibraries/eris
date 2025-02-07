@@ -1,0 +1,54 @@
+<% title "Tagged Urls"%>
+<% title_html do %>
+	<h1>Tagged Urls <small><%= params[:tag] if params[:tag] %> <%= params[:source] if params[:source] %></small>
+		<%= link_to new_tagged_url_path, :class => 'btn btn-success float-right' do %>
+			<i class="icon-plus icon-white"></i>
+			New Tagged Url
+		<% end %>
+	</h1>
+<% end %>
+<a class="trivial" href="#" onclick="$('#fetch_urls').show();">Show Urls</a>
+<div class="alert alert-info hide" id="fetch_urls">
+	<a class="close" onclick="$('#fetch_urls').hide();"  href="#">&times;</a>
+	<p><strong>URLS To Fetch Tagged Urls</strong></p>
+	<p><span class="trivial">Course Guides:</span> <%= tagged_urls_fetch_url %>?prefix=c</p>
+	<p><span class="trivial">Subject Guides:</span> <%= tagged_urls_fetch_url %>?prefix=s</p>	
+</div>
+
+<%= paginate @tagged_urls if @paginated %>
+<p><strong>Found <%= @paginated ? @tagged_urls.total_count : @tagged_urls.count  %> items, showing <%= @tagged_urls.count%></strong></p>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Tag</th>
+      <th>Title</th>
+		<th>Source</th>
+      <th>Created at</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+	<% if @tagged_urls %>
+	    <% @tagged_urls.each do |tagged_url| %>
+	      <tr>       
+	        <td><%= link_to tagged_url.tag, tagged_urls_path(:tag => tagged_url.tag) %></td>
+			<td><strong><%= tagged_url.title %></strong><br/>
+			<span class="trivial"><%= tagged_url.url %></span></td>
+			<td><%= link_to tagged_url.source, tagged_urls_path(:source => tagged_url.source) %></td>
+	        <td><%= tagged_url.created_at.strftime("%H:%M on %b %d") %></td>
+	        <td>
+	          <%= link_to 'Edit', edit_tagged_url_path(tagged_url), :class => 'btn btn-mini' %>	         
+	        </td>
+	      </tr>
+	    <% end %>
+	<% else %>
+		<tr>
+			<td class="trivial">No Urls Have Been Fetched.</td>
+		</tr>
+	<% end %>
+  </tbody>
+</table>
+
+
+<%= paginate @tagged_urls if @paginated %>
+

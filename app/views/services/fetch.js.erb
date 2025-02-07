@@ -1,0 +1,20 @@
+// First Thing's First, CREATE THE CONTAINER FOR ERIS
+document.write("<div id='eris-service-<%= @service.service_slug %>'></div>");
+
+
+$(document).ready(function() {
+	var service_slug = "<%= @service.service_slug %>";
+	
+	// hide default content
+	$("#eris_default_content").hide();
+
+	var json_content = <%= render template: "services/fetch", formats: :json %>;
+
+				
+	if (null != json_content.css) {	
+		$("head").append("<style>" + json_content.css + "</style>");
+	}
+	
+	$("#eris-service-" + service_slug).append(json_content.content);
+			
+});		

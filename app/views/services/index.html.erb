@@ -1,0 +1,44 @@
+<% title "Browse Services" %>
+<% title_html do %>
+	<h1>Services <%= link_to  new_service_path, :class => 'btn btn-success float-right' do%>
+			<i class="icon-plus icon-white"></i>
+			Create New Service
+		<% end %>
+	</h1>
+<% end %>
+
+<div class="row">
+<% @services.each_with_index do |service, index| %>
+	<div class="service standalone span5">
+		<h2><%= service.name %> <small> <%= service.live? ? "Live" : "Disabled" %></small></h2>
+
+		<table class="table table-condensed">
+			<tr>
+				<td class="trivial">Service Slug</td>
+				<td><span class="badge badge-info"><%= service.service_slug %></span></td>
+			</tr>
+			<tr>
+				<td class="trivial">Transform Course Code</td>
+				<td><span class="badge badge-inverse"><%= service.transform_course_code? ? "Yes" : "No" %></span></td>
+			</tr>
+			<tr>
+				<td class="trivial">Assigned Feeds</td>
+				<td><span class="badge"><%= service.feeds.count%></span></td>
+			</tr>
+			<tr>
+					<td class="trivial">Show Max Entries</td>
+					<td><span class="badge badge-inverse"><%= service.show_max_entries%></span></td>
+				</tr>
+			<tr>
+				<td></td>
+				<td align="right">
+				</td>
+			</tr>
+		</table>
+
+		<%= link_to 'Service Details', service_path(service), :class => 'btn btn-xmini btn-primary' %>
+		<%= link_to 'Update Service', edit_service_path(service), :class => 'btn btn-xmini' %>
+		<%= link_to 'Preview', preview_service_path(service), :class => 'btn btn-info float-right'  %>
+	</div>
+<% end  %>
+</div>

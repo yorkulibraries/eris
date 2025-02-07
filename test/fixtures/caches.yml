@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  url: MyString
+  frequency: 1
+  store: MyText
+  last_cached: 2012-03-23 11:58:00
+
+two:
+  url: MyString
+  frequency: 1
+  store: MyText
+  last_cached: 2012-03-23 11:58:00

@@ -1,0 +1,37 @@
+<% title "Data Feeds" %>
+<% title_html do %>
+	<h1>Feeds
+		<%= link_to new_feed_path, :class => 'btn btn-success float-right' do%>
+			<i class="icon-plus icon-white"></i>
+			New Feed
+		<% end %>		
+	</h1>
+<% end %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+	  <th>Show Title?</th>
+      <th>Cache</th>
+	  <th>Created On</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @feeds.each do |feed| %>
+      <tr>
+        <td><strong><%= feed.name %></strong><br/>
+		<span class="trivial"><%= feed.url.blank? ? "HTML Block" : feed.url  %></span>
+		</td>	
+		<td><%= feed.show_title? ? "yes" : "no" %></td>
+		<td><%= feed.cache_frequency %> min</td>
+        <td><%= feed.created_at.strftime("%b %d") %></td>
+        <td>
+          <%= link_to 'Edit', edit_feed_path(feed), :class => 'btn btn-mini' %>
+          <%= link_to "Show", feed_path(feed), :class => "btn btn-mini btn-success"%>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title><%= content_for?(:title) ? yield(:title) : "Untitled" %></title>
+		<style>
+		.container { padding: 10px 40px; }
+		hr { border-color: #EEEEEE;  border-left: 0 none;  border-right: 0 none;  border-style: solid none;   border-width: 1px 0;  margin: 18px 0; }
+		h1,h2,h3,h4,h5 { font-family: Verdana; }
+		.push-down { padding-top: 10px;}
+		</style>
+		<%= javascript_include_tag "application" %>	
+	</head>
+	<body>
+		<div class="container">			
+			<%= yield %>			
+		</div>
+	</body>
+</html>
+	

@@ -1,0 +1,22 @@
+<%= simple_form_for @tagged_url, :html => { :class => 'form-horizontal' } do |f| %>
+  <fieldset>
+   	  
+
+      
+	  <%= f.input :title, :input_html => { :class => "span6" } %>
+	  <%= f.input :url, :input_html => {:class => "span6"} %>
+	  <%= f.input :tag %>
+	  <%= f.input :source, :collection => ["libguides", "wordpress"] %>
+	  <%= f.input :desc, :as => :text, :input_html => { :class => "span5", :style => "height: 100px;"}%>
+    
+
+    <div class="form-actions">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to 'Cancel', tagged_urls_path, :class => 'btn' %>
+
+	  <% unless @tagged_url.new_record? %>
+			<%= link_to 'Destroy', tagged_url_path(@tagged_url), :method => :delete, :confirm => 'Are you sure?', :class => 'btn float-right btn-danger' %>
+	  <% end %>
+    </div>
+  </fieldset>
+<% end %>

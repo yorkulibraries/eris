@@ -1,0 +1,36 @@
+<% @output = capture do %>
+	<% @feeds.each do |feed| %>
+		<% unless feed.entries.size == 0 && feed.description.blank? %>
+
+			<% if feed.show_title? %>
+				<h3 class="eris-feed-title-<%= feed.title.parameterize %>"><%= feed.title %></h3>
+			<% end %>
+
+			<% unless feed.description.blank? %>
+				<div class="eris-feed-description-<%= feed.title.parameterize %>">
+					<%= feed.description.gsub(/\r\n?/, "").html_safe  %>
+				</div>
+			<% end %>
+
+			<% if feed.entries.size > 0 %>
+				<ul class="eris-feed-entries-<%= feed.title.parameterize %>">
+				<% feed.entries.each_with_index do |entry, index | %>
+					<% if index < @service.show_max_entries %>
+						<li><a href="<%= redirect_url(:protocol => 'https') %>/?<%= @query_string %>&url=<%=u entry.url %>" target="_blank"><%= entry.title %></a>
+							<% unless entry.summary.blank? %><div class="summary"><%= entry.summary%></div><% end %>
+						</li>
+					<% end %>
+				<% end %>
+				</ul>
+			<% end %>
+		<% end %>
+	<% end %>
+<% end %>
+{
+	"valid": 1,
+	"content": <%= raw @output.strip.to_json %>,
+	<% unless @service.css_style.blank? %>
+	"css" : <%= raw @service.css_style.to_json %>,
+	<% end %>
+	"link": "https://www.library.yorku.ca"
+}

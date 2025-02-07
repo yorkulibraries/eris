@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for?(:title) ? yield(:title) : "Untitled" %> - Eris</title>
+    <%= stylesheet_link_tag "application" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tag %>
+    <%= yield(:head) %>
+ 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+
+	<div class="navbar navbar-inverse navbar-fixed-top">
+	  <div class="navbar-inner">
+	    <div class="container">
+	      <a class="btn btn-navbar" data-toggle="collapse" data-target=".collapse">
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </a>
+	      <a class="brand" href="#">Eris</a>
+	      <div class="nav-collapse">
+	        <ul class="nav">
+	          <li><%= link_to "Services", services_path %></li>
+				 <li><%= link_to "Tagged Urls", tagged_urls_path %></li>
+				<li><%= link_to "Data Feeds", feeds_path %></li>
+	        </ul>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+
+    <div class="container">
+   		<% flash.each do |name, msg| %>
+		  <div class="alert alert-<%= name == :notice ? "success" : "error" %>">
+		    <a class="close" data-dismiss="alert">×</a>
+		    <%= msg %>
+		  </div>
+		<% end %>
+
+	 	<div class="page-header">
+ 	 		<%= content_tag :h1, yield(:title) if show_title? && !content_for?(:title_html) %>
+			<%= yield (:title_html) if content_for?(:title_html)%>
+		</div>
+	  <div class="row">
+	    <div class="span12"><%= yield %></div>
+	  </div>
+
+      <p>Version 1.0</p>
+    </div>
+
+  </body>
+</html>
