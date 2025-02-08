@@ -25,3 +25,5 @@ override.env
 *.sql.gz
 log/*
 mysql
+config/initializers/secret_token.rb
+
