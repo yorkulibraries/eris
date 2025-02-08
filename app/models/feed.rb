@@ -33,40 +33,17 @@ class Feed < ActiveRecord::Base
     
     feed_url = append_query_string(query_string)
     
-    
     begin
-      
-      # check the cache
-      cached_feed = Cache.get_cached_version(feed_url, cache_frequency)
-      
-      if cached_feed == nil    
-        raw_feed = open(feed_url) { |f| f.read }
-        
-        # cache it        
-        Cache.cache_data(feed_url, raw_feed)               
-        
-      else
-        self.url = "cached"
-        raw_feed = cached_feed
-      end
-      
-      
+      raw_feed = open(feed_url) { |f| f.read }
       parsed_feed = Feedzirra::Feed.parse(raw_feed)
-            
       self.entries = parsed_feed.entries
-     
-      
     rescue => e
-      Cache.cache_data(feed_url, nil)
-      
       # error happend, tell it through a feed
       logger.error "#{e.message} for url #{feed_url} and #{title}"
-      logger.error "ERROR - TIME: #{Time.now}\n"
-                  
+      logger.error "ERROR - TIME: #{Time.now}\n"                  
       self.name = "ERIS - Error Notification"  
       self.description = "An error has occured in #{title} feed. \n\n #{feed_url} \n\n #{e.message} "
       self.entries = nil  
-          
     end   
     
     self   
