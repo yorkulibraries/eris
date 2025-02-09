@@ -1,6 +1,5 @@
 FROM ruby:2.2.7
 
-
 WORKDIR /app
 
 # Copy only Gemfile first (caches dependencies)
