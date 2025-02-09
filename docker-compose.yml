@@ -5,14 +5,22 @@ services:
     volumes:
       - ./:/app
     working_dir: /app
-    command: sh -c "bundle install && bundle exec puma -C /app/config/puma.rb "
     ports:
       - ${PORT:-3000}:${PORT:-3000}
     environment:
-      - PORT=${PORT:-4004}
+      - PORT=${PORT:-3000}
       - RAILS_ENV=${RAILS_ENV:-production}
       - SECRET_KEY_BASE=${SECRET_KEY_BASE}
-      - WEB_CONCURRENCY=${WEB_CONCURRENCY}
-      - RAILS_MAX_THREADS=${RAILS_MAX_THREADS}
+      - WEB_CONCURRENCY=${WEB_CONCURRENCY:-2}
+      - RAILS_MAX_THREADS=${RAILS_MAX_THREADS:-5}
       - DATABASE_URL=${DATABASE_URL}
-      - DATABASE_POOL=${DATABASE_POOL}
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+    volumes:
+      - ../mysql:/var/lib/mysql
