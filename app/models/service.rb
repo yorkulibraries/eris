@@ -1,8 +1,6 @@
 class Service < ActiveRecord::Base
   attr_accessible :name, :service_slug, :html, :css_style, :feed_ids, :live, :transform_course_code, :show_max_entries
 
-  attr_accessible :feed_ids
-
   validates_presence_of :name, :service_slug
   validates_length_of :service_slug, :maximum => 30
   validates_format_of :service_slug, :with => /^[a-z\d_]+$/, :message => "can only be lowercase and alphanumeric with no spaces"
@@ -11,11 +9,7 @@ class Service < ActiveRecord::Base
   has_many :service_feed_bridges
   has_many :feeds, :through => :service_feed_bridges, :order => "position"
 
-  
   def fetch_feeds(query_string)
-
-
-
     feeds_list = []
     self.feeds.each do |feed|
       f = feed.fetch(query_string, feed.name)
@@ -25,7 +19,6 @@ class Service < ActiveRecord::Base
 
     feeds_list
   end
-
 
   def destroy
     if live
@@ -54,7 +47,4 @@ class Service < ActiveRecord::Base
 
     return courses
   end
-
-
-
 end

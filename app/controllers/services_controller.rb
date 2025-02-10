@@ -69,8 +69,12 @@ class ServicesController < ApplicationController
   end
 
   def create
+    feed_ids = params[:service][:feed_ids]
+    params[:service].delete(:feed_ids)
+
     @service = Service.new(params[:service])
     if @service.save
+      assign_feeds(feed_ids)
       redirect_to @service, :notice => "Successfully created service."
     else
       render :action => 'new'
@@ -83,8 +87,12 @@ class ServicesController < ApplicationController
 
   def update
     @service = Service.find(params[:id])
-    
+
+    feed_ids = params[:service][:feed_ids]
+    params[:service].delete(:feed_ids)
+
     if @service.update_attributes(params[:service])
+      assign_feeds(feed_ids)
       redirect_to @service, :notice  => "Successfully updated service."
     else
       render :action => 'edit'
@@ -98,6 +106,26 @@ class ServicesController < ApplicationController
     else
       @service.destroy
       redirect_to services_url, :notice => "Successfully destroyed service."
+    end
+  end
+
+  def assign_feeds(feed_ids)
+    feed_ids.reject! { |e| e.nil? || e == "" || e.empty? }
+    feed_ids = feed_ids.map { |e| e.to_i }
+    @service.feeds.each do |f|
+      if !feed_ids.include?(f.id)
+        ServiceFeedBridge.where(service_id: @service.id, feed_id: f.id).each do |b|
+          b.destroy
+        end
+      end
+    end
+
+    feed_ids.each do |i|
+      if !@service.feed_ids.include?(i)
+        if Feed.find(i)
+          ServiceFeedBridge.create(service_id: @service.id, feed_id: i)
+        end
+      end
     end
   end
 end

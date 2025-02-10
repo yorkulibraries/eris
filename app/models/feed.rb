@@ -7,6 +7,8 @@ class Feed < ActiveRecord::Base
   validates_format_of :url, :with => URI::regexp(%w(http https)), :allow_blank => true
   validates_uniqueness_of :name
   
+  has_many :service_feed_bridges
+  has_many :services, :through => :service_feed_bridges
   
   def entries
     @entries == nil ? Array.new : @entries    

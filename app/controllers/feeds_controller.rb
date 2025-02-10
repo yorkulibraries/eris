@@ -36,6 +36,6 @@ class FeedsController < ApplicationController
   def destroy
     @feed = Feed.find(params[:id])
     @feed.destroy
-    redirect_to feeds_url, :notice => "Successfully destroyed feed."
+    redirect_to feeds_path, :notice => "Successfully destroyed feed."
   end
 end
