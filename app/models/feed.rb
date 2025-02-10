@@ -32,7 +32,10 @@ class Feed < ActiveRecord::Base
     require 'open-uri'
     
     feed_url = append_query_string(query_string)
-    
+
+    port = ENV.fetch("PORT")
+    local = "http://localhost:#{port}/fetch/"
+    feed_url = feed_url.sub('https://www.library.yorku.ca/eris/fetch/', local)
     begin
       raw_feed = open(feed_url) { |f| f.read }
       parsed_feed = Feedzirra::Feed.parse(raw_feed)
